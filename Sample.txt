@@ -7,3 +7,4 @@ luncb:  chicken biryani
 Dinner:mutton biryani
         chicken kabab
         barbque
+        phal
