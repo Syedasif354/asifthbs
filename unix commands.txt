@@ -1,0 +1,178 @@
+linux commands
+ls commands with their options
+ls -g :- donot list the owner
+ls -G :- in a long listing dont print group names
+ls -H :- follow symbolic links listed on the command line
+ls -i :- prints the index no. of file
+ls -L :- shows info of the file
+ls -m :- fill width with a comma separated list of entries
+ls -n :- list numeric user and group ids
+ls -N :- print raw entry names
+ls -o :- do not list group info
+
+Ls -p
+Ls -Q
+Ls --quote- sample.txt
+Ls -r
+Ls -s
+Ls -- sample.txt
+Ls -t
+Ls -T 2
+Ls -v
+Ls -R
+Ls --help
+
+1)mkdir sam1
+
+cd sam1
+cat>ss1.txt
+hello hii
+hello good moring
+cd ~
+mkdir file1
+cd kannappagoud 
+cp ss1.txt/home/user/shiva
+cd ~
+cd file2
+ ls
+cat ss1.txt
+hello hii
+hello good moring
+mv ss1.txt ss2.txt
+cat ss2.txt
+hello hiii
+hello good moring 
+
+
+cp -i a.txt b.txt 
+Did u want to overwrite? Y
+
+Content of the a.txt is overwrite to the b.txt the content of the b.txt will be removed.
+
+cp -b a.txt b.txt 
+
+Content of the a.txt is overwrite to the b.txt and content of the b.txt is backups as b.txt~
+
+cp a.txt b.txt dir name
+
+The both txt files should copied to the new directory.
+
+cp *.txt dir name 
+The all .txt files in the one directory is copied to the other directory.
+
+cp -f a.txt b.txt dir name
+
+It force fully copied to the other directory.
+
+
+
+mv file1 file2
+mv pavan/file1 Harris/
+mv pavan/file1 Harris/file2
+mv pavan/* Harris/
+mv -u pavan/* Harris/
+mv —suffix=.txt pavan/file1 Harris/file2
+mv -i pavan/file1 Harris/file2 
+
+
+
+Move command:
+mv command is used to move files and directories
+$ mv main.txt def.txt /home/user/rapid/
+Options:
+1) -i(interactive): option makes the command ask the user for confirmation before moving a file that would overwrite an existing file, you have to press y for confirm moving, any other key leaves the file as it is
+
+$ mv -i a.txt b.txt
+mv: overwrite 'b.txt'? y
+
+2) -f(force):
+The -f option overrides this minor protection and overwrites the destination file forcefully and deletes the source file
+
+$ ls -l b.txt
+-r--r--r--+ 1 User User 21 Sep  7 13:37 b.txt
+
+$ mv demo.txt b.txt
+mv: replace 'b.txt', overriding mode 0444 (r--r--r--)? n
+
+$ ls
+b.txt  c.txt  d.txt  demo.txt
+
+$ mv -f demo.txt b.txt
+
+$ ls
+b.txt  c.txt  d.txt
+
+3) -n (no-clobber): With -n option, mv prevent an existing file from being overwritten. 
+
+$ ls
+b.txt  c.txt  d.txt  demo.txt
+
+$ cat b.txt
+Hello world
+
+$ mv -n demo.txt b.txt
+
+$ ls
+b.txt  c.txt  d.txt  demo.txt
+-b(backup): With this option, it is easier to take a backup of an existing file that will be overwritten as a result of the mv command. This will create a backup file with the tilde character(~) appended to it. 
+
+$ ls
+b.txt  c.txt  d.txt  demo.txt
+
+$ mv -b demo.txt b.txt
+
+$ ls
+b.txt  b.txt~  c.txt  d.txt
+
+
+
+
+$cp file1.txt   file2.txt
+$mv file3.txt   file4.txt
+
+Here the difference between cp and mv command is that the source file will be deleted in mv command after, it is moved to destination path but in case cp command it will duplicate the file and source file will not get deleted
+
+
+-----cut command------
+cut -b 1,2,3 file.txt
+cut -b 1-3,5-7 file.txt
+cut -b 1- file.txt
+cut -b -3 file txt
+cut -c4 file.txt
+cut -c4,6 file.txt
+cut -c4-7 file.txt
+cut -c-6 file.txt
+cut -c10- file.txt
+cut -c- file.txt
+cut --compliment -c 5 state.txt
+
+
+cut -d -f 
+cat marks.txt
+cut -d- -f2 marks.txt
+cut -d- -f2,3 marks.txt
+cut -d- -f1- marks.txt
+cut -d- -f-3 marks.txt
+cut -d- -f1-3 marks.txt
+complement
+cut -complement -d- -f2 marks.txt
+cut -complement -d- -f2,3 marks.txt
+cut -complement -d- -f1- marks.txt
+cut -complement -d- -f-3 marks.txt
+cut -complement -d- -f1-3 marks.txt
+
+output-delimiter
+cut -d- -f2 marks.txt --output-delimiter="%"
+cut -d- -f2 marks.txt --output-delimiter="*"
+-----sort command
+Sort file.txt
+Sort –r file.txt
+Sort –k 2 file.txt
+Sort –c file.txt
+Sort –u file.txt
+Sort –n file.txt
+Sort –nu file.txt
+Sort –M file.txt
+Sort –o output.txt file.txt
+Sort –t “,” –k  1 file.txt
+Sort –t “,” –k2nr   file.txt
