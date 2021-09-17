@@ -1,0 +1,168 @@
+1. use customerdb;
+switched to db customerdb
+
+
+2.  db
+customerdb
+
+3.db.createUser(
+   {
+     user: "mythsubu",
+     pwd: "1234",
+     roles: [ "readWrite", "dbAdmin" ]
+   }
+)
+
+4. db.createCollection("customer");
+{ "ok" : 1 }
+
+5. show collections
+customer
+
+6.  to insert document in customer collection
+
+ db.customer.insert({first_name:"myth",last_name:"subu"});
+WriteResult({ "nInserted" : 1 })
+> db.customer.insert({first_name:"jayashree",last_name:"G"});
+WriteResult({ "nInserted" : 1 })
+
+7. to select all the records from the collection use find()
+db.customer.find();
+{ "_id" : ObjectId("6142e357a024d997cc299f63"), "first_name" : "myth", "last_name" : "subu" }
+{ "_id" : ObjectId("6142e3dea024d997cc299f64"), "first_name" : "jayashree", "last_name" : "G" }
+
+
+db.customer.find().pretty();
+
+8.
+
+db.customer.insert([{first_name:"dilip",last_name:"Rao"},{first_name:"Sourav",last_name:"Ganguly"}]);
+
+----------------------------------------------------------------------
+In relational db  we cannot  easily scale up horizontally  if can be done by ALTER TABLE and add coloum
+
+In NOSQL db we can easily scale up the database
+db.customer.insert([{first_name:"Usama",last_name:"Shukri",gender:"Male"},{first_name:"Dhoni",last_name:"MS",gender:"Male"}]);
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 2,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+> db.customer.find();
+{ "_id" : ObjectId("6142e357a024d997cc299f63"), "first_name" : "myth", "last_name" : "subu" }
+{ "_id" : ObjectId("6142e3dea024d997cc299f64"), "first_name" : "jayashree", "last_name" : "G" }
+{ "_id" : ObjectId("6142e61ca024d997cc299f65"), "first_name" : "dilip", "last_name" : "Rao" }
+{ "_id" : ObjectId("6142e61ca024d997cc299f66"), "first_name" : "Sourav", "last_name" : "Ganguly" }
+{ "_id" : ObjectId("6142e909a024d997cc299f67"), "first_name" : "Usama", "last_name" : "Shukri", "gender" : "Male" }
+{ "_id" : ObjectId("6142e909a024d997cc299f68"), "first_name" : "Dhoni", "last_name" : "MS", "gender" : "Male" }
+
+
+--------------------------------------------------------------------------------------------
+To update a record   : use the update function
+
+8. db.customer.update({first_name:"myth"},{first_name:"myth",last_name:"subu",gender:"female"});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+9.db.customer.update({first_name:"jayashree"},{$set:{gender:"female"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+
+10.db.customer.update({first_name:"dilip"},{$set:{gender:"male",age:45}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+11. db.customer.update({first_name:"dilip"},{$inc:{age:5}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+-------------------------------------------------------------------------
+12 to delete a field :  using update function
+
+
+db.customer.update({first_name:"dilip"},{$unset:{age:1}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+----------------------------------------------------------------------
+
+13. how to insert a record using update function
+
+db.customer.update({first_name:"shiva"},{first_name:"shiv",last_name:"Reddy",gender:"male"},{upsert:true});
+
+{ "_id" : ObjectId("6142f292bb870e0b4320eb12"), "first_name" : "shiv", "last_name" : "Reddy", "gender" : "male" }
+
+-----------------------------------------------------------------------------------
+14. rename a field  in a record
+
+db.customer.update({first_name:"myth"},{$rename:{"gender":"sex"}});
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+
+1.db.customer.updateMany({},{$set:{status:"V"}})
+
+2.db.customer.updateMany({gender:"male"},{$set:{status:"MV"}});
+{ "acknowledged" : true, "matchedCount" : 4, "modifiedCount" : 4 }
+
+
+3. db.customer.update({gender:"male"},{$set:{status:"MV"}},{multi:true});
+WriteResult({ "nMatched" : 5, "nUpserted" : 0, "nModified" : 1 })
+
+------------------------------------------------
+select * from employees;
+select * from employees where ---> Usama
+select age form employees where lastname="Usama"
+
+how to get the records and their required info(project) using find
+how are we going to do with restriction 
+
+qerying based on restrictions / criteria
+
+1. db.customer.find().pretty();
+2.  db.customer.find({first_name:"shiv"}).pretty();
+{
+        "_id" : ObjectId("6142f292bb870e0b4320eb12"),
+        "first_name" : "shiv",
+        "last_name" : "Reddy",
+        "gender" : "male",
+        "age" : 50,
+        "status" : "MV"
+}
+3. $gt,$lt,$gte: with restriction
+
+4. projecting only few fields of the document
+
+1.db.customer.find({},{first_name:1});
+2. db.customer.find({},{_id:0,first_name:1})
+3. db.customer.find({},{_id:0,first_name:0,age:0});
+
+
+5.  to remove  a document for the collection
+  db.collection.remove(delete criteria)
+ db.customer.remove({first_name:"Dhoni"});
+
+
+
+db.customer.remove({status:{$eq:"FV"}});
+db.customer.remove({status:"FV"});
+
+6. sort the records in a collection in accending or decending order
+Accending order
+1. db.customer.find({},{_id:0,first_name:1,last_name:1}).sort({"last_name":1});
+
+Decending order:
+2.  db.customer.find({},{_id:0,first_name:1,last_name:1}).sort({"last_name":-1});
+                 restriction
+db.customer.find({},{}).sort( 1).pretty()
+
+
+
+
+db.customer.find({age:{$gt:30}}).limit(2).skip(2);
+
+
+
+ db.customer.find().count();
+
+ db.customer.find({status:"MV"}).count();
+
