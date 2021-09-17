@@ -1,0 +1,168 @@
+Simple select : selection and projection 
+========================================
+use hr;
+select * from employees;
+select employee_id,last_name,salary,department_id from employees;
+desc departments;
+select department_id,location_id from departments;
+select last_name,salary,(salary*12)+100 from employees;
+select last_name,salary,(salary*12)+100 annualsal from employees;
+select last_name,job_id,commission_pct from employees;
+select last_name ,12*salary*commission_pct from employees;
+
+select concat(last_name,job_id) from employees;
+select concat(last_name," works as ",job_id) empwithjobid from employees;
+
+
+
+select employee_id,department_id from employees; 
+select department_id from employees;
+select distinct department_id from employees;
+
+desc departments 
+
+Restriction and sorting :
+==========================
+
+Restriction : we use where clause:
+select employee_id,last_name,department_id from employees where department_id=50;
+select employee_id,last_name,hire_date,department_id from employees where last_name='Vollman';
+select employee_id,last_name,hire_date,salary from employees where hire_date='1997-10-10';
+
+1. how to get employees who joined in year 1996?
+
+select employee_id,last_name,hire_date,salary from employees where hire_date='1997-03-19';
+select employee_id,last_name,hire_date,salary from employees where DATE_FORMAT(hire_date, '%Y')=1996;
+
+select employee_id,last_name,hire_date,salary from employees where DATE_FORMAT(hire_date, '%y')=96;
+
+select employee_id,last_name,Date_FORMAT(hire_date,'%W %D %M %Y'),salary from employees where DATE_FORMAT(hire_date, '%Y')=1996;
+
+Restriction with comparision operators:
+
+= > >= < <= <>  
+between  ---- and ----  (lower and upper limit are inclusive )
+IN(set)
+who are employees working under manger_id : 100,101,201
+LIKE(pattern)
+IS NULL 
+
+
+
+select  last_name,salary from employees where salary <=8000;
+select  last_name,salary from employees where salary =5800;
+select  last_name,salary from employees where salary >=8000;
+select  last_name,salary from employees where salary <> 8000;
+
+select  last_name,salary from employees where salary between 2500 and 3500;
+select employee_id, last_name,salary,manager_id  from employees;
+select employee_id, last_name,salary,manager_id  from employees where manager_id in (100,101,201);
+select first_name from employees where first_name like 'S%';
+select last_name from employees where last_name like '_o%';
+select last_name from employees where last_name like '__u%';
+select last_name from employees where last_name like '%o%';
+select last_name from employees where last_name like '%op%';
+select last_name ,manager_id from employees  where manager_id IS NULL;
+
+Logical operators  AND OR NOT 
+=============================
+
+1 find the employees whose salary is >=5000 and  job_id which matches 'MAN' pattern 
+
+select employee_id,last_name,job_id,salary from employees 
+         where ((salary>=5000) and (job_id LIKE '%MAN%'));
+         
+select last_name,job_id from employees where job_id NOT IN ('IT_PROG','ST_MAN');         
+
+select last_name,job_id,salary from employees where ((job_id = 'SA_REP')  OR (job_id = 'AD_PRES')) and (salary>5000);
+
+select last_name,job_id,salary from employees where (job_id = 'SA_REP')  OR (job_id = 'AD_PRES') and (salary>5000);
+
+Sorting in  Asccending and Decending order :
+-------------------------------------------
+select last_name,job_id,department_id,hire_date  from employees 
+     order by hire_date DESC;  
+
+select last_name,department_id, salary*12 annualsal  from employees 
+    order by annualsal;     
+     
+select last_name,department_id, salary*12 annualsal  from employees 
+    order by annualsal , last_name desc;
+
+select concat('hello','world');
+select substr('helloworld',1,5); -----> hello
+select length('helloworld');
+select instr('helloworld','w');
+select replace('Jack and Jue','J','Bl');
+select trim('h' from 'helloworld');
+select lpad(salary,10,'*') from employees;
+select rpad(last_name,15,'*') from employees;
+     
+select employee_id,concat(first_name,last_name) Name, job_id, length(last_name),instr(last_name,'a') 'contains a?'
+    from employees where
+        substr(job_id,4)='REP';
+    
+select substr('helloworld',4);
+select job_id from employees;
+select last_name ,instr(last_name,'a') 'position of the first occurance of a' from employees;
+
+45.932 --- > round it to 2 digits 
+     ------> 45.93
+
+select upper(concat(substr(last_name, 1,8), '_B84')) from employees where department_id=50;
+
+select employee_id, last_name from employees where last_name='higgins';
+
+select round(45.933,2) from dual;
+select truncate(45.937,2) from dual;
+select mod(11,2) from dual;
+select last_name,salary,mod(salary,5000) from employees where job_id ='SA_REP';
+
+select hire_date from employees;
+select employee_id,last_name,job_id,department_id from employees  where hire_date='1993-01-13' 
+select CURRENT_TIMESTAMP;
+SELECT DATE_FORMAT(hire_date, '%W %D %M %Y') from employees;
+
+select hire_date from employees;
+select employee_id,last_name,job_id,department_id from employees  where hire_date='1993-01-13' 
+select CURRENT_TIMESTAMP;
+SELECT DATE_FORMAT(hire_date, '%W %D %M %Y') from employees where DATE_FORMAT(hire_date, '%Y')=1994;
+
+----join----
+desc employees;
+select employee_id,last_name,location_id,employees.department_id from employees 
+INNER JOIN departments  ON departments.department_id = employees.department_id;
+
+select employees.employee_id,employees.last_name,employees.job_id,jobs.job_title  from employees 
+INNER JOIN jobs on employees.job_id = jobs.job_id;
+
+select e.employee_id,e.last_name,e.job_id,j.job_title from employees e 
+INNER JOIN jobs j on e.job_id = j.job_id;
+
+select employee_id,last_name,location_id,employees.department_id from employees 
+INNER JOIN departments  ON departments.department_id = employees.department_id;
+
+select employees.employee_id,employees.last_name,employees.job_id,jobs.job_title  from employees 
+INNER JOIN jobs on employees.job_id = jobs.job_id;
+
+
+
+
+select e.employee_id,e.last_name,e.job_id,j.job_title from employees e 
+INNER JOIN jobs j on e.job_id = j.job_id;
+
+
+select e.employee_id,e.last_name,e.department_id,d.department_name  from employees e
+ left join departments d  on e.department_id=d.department_id
+ union all
+ select e.employee_id,e.last_name,e.department_id,d.department_name  from employees e
+ right join departments d  on e.department_id=d.department_id;
+ 
+ select e.employee_id,e.last_name,d.department_id,d.department_name  from employees e
+ left join departments d  on e.department_id=d.department_id
+ union all
+ select e.employee_id,e.last_name,d.department_id,d.department_name  from employees e
+ right join departments d  on e.department_id=d.department_id;
+
+
+
