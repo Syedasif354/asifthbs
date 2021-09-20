@@ -1,0 +1,314 @@
+
+////program to check prime number and reversing a number 
+package javaapplication18;
+
+import java.util.Scanner;
+
+
+public class JavaApplication18 {
+
+    public static void main(String[] args) {
+        Scanner sc= new Scanner(System.in);
+        int n=sc.nextInt();
+        rev(n);
+        for(int i=1;i<=n;i++){
+        if(isprime(i)){
+            System.out.println(i+" ");
+        }}
+//        else
+//            System.out.println("not prime");
+    }
+
+    private static void rev(int n) {
+         //To change body of generated methods, choose Tools | Templates.
+     int rev=0,t;
+     while(n!=0){
+     t=n%10;
+     n=n/10;
+     rev=(rev*10)+t;
+    }
+     System.out.println(rev);
+     
+    }
+
+    private static boolean isprime(int n) {
+    
+        for(int i=2;i<=n/2;i++){
+            if(n%i==0){
+                return false;
+              
+            }
+            
+        }
+        return true;
+    }
+    
+    
+}
+
+////
+
+package usingmap;
+
+import java.util.*;
+
+public class Usingmap {
+
+ 
+    public static void main(String[] args) {
+       
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        System.out.println(fact(n));
+    }
+
+    private static int fact(int n) {
+     if(n==1)
+         return 1;
+       else
+         return n*fact(n-1);
+     
+    }
+    
+}
+
+switch example
+
+package switchex;
+
+import java.util.Scanner;
+
+
+public class Switchex {
+    public static void main(String[] args) {
+       Scanner sc=new Scanner(System.in);
+       int n=sc.nextInt();
+       String msg;
+       switch(n){
+           case 1:
+           case 3:
+           case 5:
+           case 7:
+           case 8:
+           case 12:msg="has 31 days";break;
+            case 2:  msg="has 28 or 29 days";break;
+            case 4:
+            case 6:
+            case 9:
+            case 10:
+            case 11:msg="has 30 days";break;
+            default:msg="invalid month";break;
+            
+       }
+       System.out.println(msg);
+    }
+    
+}
+
+/////array example
+
+package arraydemo;
+
+import java.util.Scanner;
+
+public class Arraydemo {
+
+    public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
+System.out.println("Enter the no. of elements:");
+int n = sc.nextInt();
+int[] arr = new int[n];
+int sum=0;
+System.out.println("enter the array elements:");
+for (int i=0;i<arr.length;i++){​​​​​
+  arr[i] = sc.nextInt(); 
+   sum+=arr[i];
+}​​​​​
+  System.out.println("printing the elements in the array");
+for (int i=0;i<arr.length;i++)
+{​​​​​
+  System.out.print(arr[i]+"    ");
+}​​​​​
+System.out.println();
+System.out.println("the sum of elements in array: "+sum ); 
+    }
+    
+}
+
+///amstrong num
+import java.util.Scanner;  
+import java.lang.Math;  
+public class ArmstsrongNumberExample  
+{  
+
+static boolean isArmstrong(int n)   
+{   
+int temp, digits=0, last=0, sum=0;   
+
+temp=n;    
+while(temp>0)    
+{   
+temp = temp/10;   
+digits++;   
+}   
+temp = n;   
+while(temp>0)   
+{   
+  
+last = temp % 10;   
+
+sum +=  (Math.pow(last, digits));   
+   
+temp = temp/10;   
+}  
+
+if(n==sum)   
+
+return true;      
+
+else return false;   
+}   
+
+public static void main(String args[])     
+{     
+int num;   
+Scanner sc= new Scanner(System.in);  
+System.out.print("Enter the limit: ");  
+
+num=sc.nextInt();  
+System.out.println("Armstrong Number up to "+ num + " are: ");  
+for(int i=0; i<=num; i++)  
+
+if(isArmstrong(i))  
+
+System.out.print(i+ ", ");  
+}   
+} 
+
+///leap year program
+
+ /*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package leapyear;
+
+import java.util.Scanner;
+
+/**
+ *
+ * @author syed
+ */
+public class Leapyear {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args){
+      int year;
+      System.out.println("Enter an Year :: ");
+      Scanner sc = new Scanner(System.in);
+      year = sc.nextInt();
+
+      if (((year % 4 == 0) && (year % 100!= 0)) || (year%400 == 0))
+         System.out.println("Specified year is a leap year");
+      else
+         System.out.println("Specified year is not a leap year");
+   }
+    
+}
+
+///perfect number program
+
+
+package perfectnum;
+import java.util.Scanner; 
+
+public class Perfectnum {
+
+ 
+static long isPerfect(long num)  
+{  
+      
+long sum=0;  
+
+for(int i=1; i <= num/2; i++)  
+{  
+if(num % i == 0)  
+{  
+  
+sum=sum + i;  
+} 
+}
+return sum;   
+} 
+public static void main(String args[])    
+{  
+long number, s;  
+Scanner sc=new Scanner(System.in);         
+System.out.print("Enter the number: ");  
+  
+number=sc.nextLong();  
+  
+s = isPerfect(number);  
+  
+if(s==number)  
+System.out.println(number+" is a perfect number");  
+else  
+System.out.println(number+" is not a perfect number");   
+}   
+}  
+
+//table program
+
+
+package tableprg;
+
+import java.util.Scanner;
+
+
+public class Tableprg {
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        for(int i=0;i<=10;i++){
+            System.out.println(n+"*"+i+"="+(n*i));
+        }
+    }
+    
+}
+
+////finding lcm and hcf
+
+import java.util.Scanner;
+
+public class JavaExample{
+   public static void main(String args[]){
+      int temp1, temp2, num1, num2, temp, hcf, lcm;
+      Scanner scanner = new Scanner(System.in);
+
+      System.out.print("Enter First Number: ");
+      num1 = scanner.nextInt();
+      System.out.print("Enter Second Number: ");
+      num2 = scanner.nextInt();
+      scanner.close();
+
+      temp1 = num1;
+      temp2 = num2;
+
+      while(temp2 != 0){
+         temp = temp2;
+         temp2 = temp1%temp2;
+         temp1 = temp;
+      }
+
+      hcf = temp1;
+      lcm = (num1*num2)/hcf;
+
+      System.out.println("HCF of input numbers: "+hcf);
+      System.out.println("LCM of input numbers: "+lcm);
+   }
+}
