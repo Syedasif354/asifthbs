@@ -1,0 +1,188 @@
+///Dice program
+package com.torryharris.stadium;
+
+import com.torryharris.playerpack.Player;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Player p1=new Player();
+        int p1Sc=p1.play();
+        int p1d1Sc=p1.getd1score();
+        int p1d2Sc=p1.getd2score();
+
+        System.out.println("p1 scoreed:"+p1Sc);
+        System.out.println("p1d1scored:"+p1d1Sc  +" p1d2scored:"+p1d2Sc);
+
+        Player p2=new Player();
+        int p2Sc=p2.play();
+        int p2d1Sc=p2.getd1score();
+        int p2d2Sc=p2.getd2score();
+
+        System.out.println("p2 scoreed:"+p2Sc);
+        System.out.println("p2d1scored:"+p2d1Sc  +" p2d2scored:"+p2d2Sc);
+
+        if(p1Sc>p2Sc)
+            System.out.println("player 1 won");
+        else if(p1Sc==p2Sc)
+            System.out.println("Draw match");
+        else
+            System.out.println("player 2 won");
+    }
+}
+
+package com.torryharris.playerpack;
+
+import java.util.Random;
+
+public class Dice {
+   private int fValue;
+   public int roll(){
+       Random rand=new Random();
+       fValue=((int)rand.nextInt(5)+1);
+       return fValue;
+   }
+   public int getfValue(){
+       return fValue;
+   }
+}
+
+package com.torryharris.playerpack;
+
+public class Player {
+    Dice d1,d2;
+
+    public Player() {
+        d1=new Dice();
+        d2=new Dice();
+    }
+    public int play(){
+        return(d1.roll()+d2.roll());
+    }
+
+    public int getd1score(){
+        return (d1.getfValue());
+    }
+    public int getd2score(){
+        return (d2.getfValue());
+    }
+}
+
+///constructor overloading
+package com.torryharris.canvas;
+
+import com.torryharris.circle.Circle;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Circle c1=new Circle();
+        System.out.println(c1);
+        Circle c2=new Circle(4);
+        System.out.println(c2);
+        Circle c3=new Circle("red");
+        System.out.println(c3);
+        Circle c4=new Circle(5,"yello");
+        System.out.println(c4);
+    }
+}
+
+package com.torryharris.circle;
+
+public class Circle {
+    private double radius;
+    private String color;
+    public Circle(){
+            this(4.4,"bleu");
+    }
+
+    public Circle(double v) {
+        this(v,"bleu");
+    }
+
+    public Circle(String color) {
+        this(4.4,color);
+    }
+
+    public Circle(double radius, String color) {
+        this.radius = radius;
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "Circle{" +
+                "radius=" + radius +
+                ", color='" + color + '\'' +
+                '}';
+    }
+}
+
+//function overloading demo
+package com.torryharris.mainpack;
+import com.torryharris.utilty.*;
+public class Main {
+
+    public static void main(String[] args) {
+	  summation s=new summation();
+      System.out.println(s.add(10,20));
+        System.out.println(s.add(10,20,3));
+        System.out.println(s.add("syed","asif"));
+    }
+}
+
+package com.torryharris.utilty;
+
+public class summation {
+    public int add(int x,int y){
+        return x+y;
+    }
+    public double add(int x,int y,int z){
+        return x+y+z;
+    }
+    public String add(String s1,String s2){
+        return (s1+" "+s2);
+    }
+
+}
+
+//static variable demo
+package com.torryharris.mainpack;
+
+import com.torryharris.spack.Person;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Person p1=new Person(1,"syed");
+        Person p2=new Person(2,"asif");
+	  System.out.println(Person.count);
+    }
+}
+
+package com.torryharris.spack;
+
+public class Person {
+    public static int count;
+    private int oid;
+    private String pname;
+
+    static{
+        count=0;
+    }
+
+    public Person(int oid, String pname) {
+        this.oid = oid;
+        this.pname = pname;
+        count++;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "oid=" + oid +
+                ", pname='" + pname + '\'' +
+                '}';
+    }
+}
