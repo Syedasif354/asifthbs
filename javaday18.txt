@@ -1,0 +1,288 @@
+package com.torryharris.bankpack;
+
+import com.torryharris.accountpack.Account;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Account ac1=new Account("savings",5000);
+        System.out.println(ac1);
+
+        System.out.println(ac1.deposite(6000));
+        System.out.println("current balance "+ac1.getBalance());
+        System.out.println(ac1.withdraw(4000));
+        System.out.println("current balance "+ac1.getBalance());
+        Account ac2=new Account("recurring",5000);
+        System.out.println(ac2);
+        System.out.println(ac2.deposite(3000));
+        System.out.println("current balance "+ac2.getBalance());
+        System.out.println(ac2.withdraw(5000));
+        System.out.println("current balance "+ac2.getBalance());
+         System.out.println(ac1.accType);
+    }
+}
+
+package com.torryharris.accountpack;
+
+import java.util.Random;
+
+public class Account {
+    private static long count;
+    private final long accNo;
+    public String accType;
+    //String accType;
+    private double balance;
+
+    static {
+        count=0;
+    }
+    public static long getCount(){
+        return ++count;
+        //generating random account number
+//        Random r=new Random();
+//        return r.nextInt(1000)+2000;
+    }
+
+    public Account(String accType, double balance) {
+        this.accNo=getCount();
+        this.accType = accType;
+        this.balance = balance;
+    }
+
+    public double deposite(double amount){
+        balance+=amount;
+        return amount;
+    }
+    public double withdraw(double amount){
+        balance-=amount;
+        return amount;
+    }
+    public double getBalance(){
+        return balance;
+    }
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accNo=" + accNo +
+                ", accType='" + accType + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
+}
+
+//inhertance demo
+package com.torryharris.mainpack;
+
+import com.torryharris.emppack.Employee;
+import com.torryharris.emppack.manager;
+import com.torryharris.emppack.programmer;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Employee p1=new Employee(1,1500,"syed");
+        System.out.println(p1.getDeatails());
+        Employee p2=new manager(2,3000,"asif","hr",4);
+        System.out.println(p2.getDeatails());
+        programmer p3=new programmer(3,5000,"asmus",4,"java");
+        System.out.println(p3.getDeatails());
+    }
+}
+
+package com.torryharris.emppack;
+
+public class Employee {
+    protected  int empid,sal;
+    protected String empname;
+
+    public Employee(int empid, int sal, String empname) {
+        this.empid = empid;
+        this.sal = sal;
+        this.empname = empname;
+    }
+
+
+    public String getDeatails(){
+        return empid+" "+empname+" "+sal;
+    }
+}
+
+package com.torryharris.emppack;
+
+public class manager extends Employee{
+    private String deptName;
+    private int empcount;
+    public manager(int empid, int sal, String empname,String deptName,int empcount) {
+        super(empid, sal, empname);
+        this.deptName=deptName;
+        this.empcount=empcount;
+    }
+
+    @Override
+    public String getDeatails() {
+        return (super.getDeatails()+" "+deptName+" "+empcount);
+    }
+
+}
+
+package com.torryharris.emppack;
+
+public class programmer extends Employee{
+    private int noOfproj;
+    private String skill;
+
+    public programmer(int empid, int sal, String empname,int noOfproj,String skill) {
+        super(empid, sal, empname);
+        this.noOfproj=noOfproj;
+        this.skill=skill;
+    }
+
+    @Override
+    public String getDeatails() {
+        return super.getDeatails()+" "+noOfproj+" "+skill;
+    }
+}
+///Abstract class and method demo
+package com.torryharris.mainpack;
+
+import com.torryharris.emppack.Employee;
+import com.torryharris.emppack.manager;
+import com.torryharris.emppack.programmer;
+
+public class Main {
+
+    public static void main(String[] args) {
+//        Employee p1=new Employee(1,1500,"syed");
+//        System.out.println(p1.getDeatails());
+        Employee p2=new manager(2,3000,"asif","hr",4);
+        System.out.println(p2.getDeatails()+" "+p2.calcNetSal());
+        programmer p3=new programmer(3,5000,"asmus",4,"java");
+        System.out.println(p3.getDeatails()+" "+p3.calcNetSal());
+    }
+}
+
+package com.torryharris.emppack;
+
+public abstract class Employee {
+    protected  int empid,sal;
+    protected String empname;
+
+    public Employee(int empid, int sal, String empname) {
+        this.empid = empid;
+        this.sal = sal;
+        this.empname = empname;
+    }
+
+    public abstract double calcNetSal();
+
+    public String getDeatails(){
+        return empid+" "+empname+" "+sal;
+    }
+}
+package com.torryharris.emppack;
+
+public class manager extends Employee{
+    private String deptName;
+    private int empcount;
+    public manager(int empid, int sal, String empname,String deptName,int empcount) {
+        super(empid, sal, empname);
+        this.deptName=deptName;
+        this.empcount=empcount;
+    }
+
+    @Override
+    public double calcNetSal() {
+        return 15000;
+    }
+
+    @Override
+    public String getDeatails() {
+        return (super.getDeatails()+" "+deptName+" "+empcount);
+    }
+
+}
+
+package com.torryharris.emppack;
+
+public class programmer extends Employee{
+    private int noOfproj;
+    private String skill;
+
+    public programmer(int empid, int sal, String empname,int noOfproj,String skill) {
+        super(empid, sal, empname);
+        this.noOfproj=noOfproj;
+        this.skill=skill;
+    }
+
+    @Override
+    public double calcNetSal() {
+        return 30000;
+    }
+
+    @Override
+    public String getDeatails() {
+        return super.getDeatails()+" "+noOfproj+" "+skill;
+    }
+}
+
+///interface demo
+
+package com.torryharris.mainpack;
+
+import com.torryharris.pack1.class1;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        class1 c=new class1();
+        c.m1();
+        c.m3();
+    }
+}
+package com.torryharris.pack1;
+
+public interface interface1  {
+    void m1();
+    void m2();
+
+}
+package com.torryharris.pack1;
+
+public interface interface2 {
+    int count=10;//by default it is static and public
+    void m3();//by default abstract
+}
+package com.torryharris.pack1;
+
+public interface intterface3 extends interface1,interface2{
+    @Override
+    void m1();
+
+    @Override
+    void m2();
+
+    @Override
+    void m3();
+}
+package com.torryharris.pack1;
+
+public class class1 implements interface1,interface2{
+    @Override
+    public void m1() {
+        System.out.println("in m1");
+
+    }
+
+    @Override
+    public void m2() {
+        System.out.println("in m2");
+    }
+
+    @Override
+    public void m3() {
+        System.out.println("in m3");
+        System.out.println("in m3 count" +interface2.count);
+    }
+}
+
