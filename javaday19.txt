@@ -1,0 +1,235 @@
+package com.torryharris.mainpack;
+//exception demo1
+public class Main {
+
+    public static void main(String[] args) {
+     int result=0;
+     int n1=Integer.parseInt(args[0]);
+     int n2=Integer.parseInt(args[1]);
+     try {
+         result = n1 / n2;
+
+     } catch (ArithmeticException e) {
+         System.out.println("it cant be divided by zero"+e.getMessage());
+     }
+     catch (ArrayIndexOutOfBoundsException e){
+         System.out.println("input not entered"+e.getMessage());
+     }finally {
+         System.out.println("finally "+result);
+     }
+        System.out.println(result);
+    }
+}
+
+//Exception demo2
+package com.torryharris.mainpack;
+
+import com.torryharris.excpack.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+	    System.out.println(readInput.readInput2());
+    }
+}
+
+package com.torryharris.excpack;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class readInput {
+    public static String readInput2(){
+        try(InputStreamReader ir=new InputStreamReader(System.in);
+        BufferedReader br=new BufferedReader(ir)){
+            String str1, str2;
+            str1 = br.readLine();
+
+            str2 = br.readLine();
+            int res = Integer.parseInt(str1) / Integer.parseInt(str2);
+            return ("result " + res);
+        } catch (IOException e) {
+            return ("some exception " + e);
+        }
+    }
+    public static String readInput1() {
+        InputStreamReader ir = null;
+        BufferedReader br = null;
+        String str1, str2;
+        ir = new InputStreamReader(System.in);
+        br = new BufferedReader(ir);
+        try {
+            str1 = br.readLine();
+
+            str2 = br.readLine();
+            int res = Integer.parseInt(str1) / Integer.parseInt(str2);
+            return ("result " + res);
+        } catch (IOException e) {
+            return ("some exception " + e);
+        }
+        finally {
+            try {
+                ir.close();br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
+
+}
+
+package com.torryharris.mainpack;
+
+import com.torryharris.excpack.*;
+
+import java.io.IOException;
+
+public class Main {
+
+    public static void main(String[] args) {
+        try {
+            System.out.println(readInput.readInput3());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+package com.torryharris.excpack;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class readInput {
+    public static String readInput2(){
+        try(InputStreamReader ir=new InputStreamReader(System.in);
+        BufferedReader br=new BufferedReader(ir)){
+            String str1, str2;
+            str1 = br.readLine();
+
+            str2 = br.readLine();
+            int res = Integer.parseInt(str1) / Integer.parseInt(str2);
+            return ("result " + res);
+        } catch (IOException e) {
+            return ("some exception " + e);
+        }
+    }
+    public static String readInput1() {
+        InputStreamReader ir = null;
+        BufferedReader br = null;
+        String str1, str2;
+        ir = new InputStreamReader(System.in);
+        br = new BufferedReader(ir);
+        try {
+            str1 = br.readLine();
+
+            str2 = br.readLine();
+            int res = Integer.parseInt(str1) / Integer.parseInt(str2);
+            return ("result " + res);
+        } catch (IOException e) {
+            return ("some exception " + e);
+        }
+        finally {
+            try {
+                ir.close();br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+    }
+
+    public static String readInput3() throws IOException,NumberFormatException,ArithmeticException{
+        InputStreamReader ir = null;
+        BufferedReader br = null;
+        String str1, str2;
+        ir = new InputStreamReader(System.in);
+        br = new BufferedReader(ir);
+
+            str1 = br.readLine();
+
+            str2 = br.readLine();
+            int res = Integer.parseInt(str1) / Integer.parseInt(str2);
+            return ("result " + res);
+
+
+    }
+}
+
+///custom exception
+package com.torryharris.mainpack;
+
+import com.torryharris.emppack.employee;
+import com.torryharris.excpack.insuffiLeaveException;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        employee e1=new employee(9,5);
+        System.out.println(e1);
+        try {
+            System.out.println(e1.applyL(4));
+        } catch (insuffiLeaveException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+package com.torryharris.excpack;
+
+public class insuffiLeaveException extends Exception{
+    private String msg;
+
+    public insuffiLeaveException(String s) {
+        this.msg=s;
+    }
+
+
+    @Override
+    public String getMessage() {
+        return msg;
+    }
+}
+
+package com.torryharris.emppack;
+
+import com.torryharris.excpack.insuffiLeaveException;
+
+public class employee {
+    private int empid,bleave;
+
+    public employee(int empid, int bleave) {
+        this.empid = empid;
+        this.bleave = bleave;
+    }
+    public String applyL(int n) {
+        if(bleave<n){
+            try {
+                throw new insuffiLeaveException("insuff leave...");
+            } catch (insuffiLeaveException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            bleave-=n;
+            return ("enjoy leave");
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "employee{" +
+                "empid=" + empid +
+                ", bleave=" + bleave +
+                '}';
+    }
+}
