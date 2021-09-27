@@ -1,0 +1,326 @@
+package com.torryharris.mainpack;
+
+import com.rorryharris.datepack.Mydate;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Mydate d1=new Mydate(27,9,98);
+        Mydate d2=new Mydate(27,9,98);
+        Mydate d3=d1;
+        System.out.println("*** "+d1.equals(d2));
+        System.out.println("*** "+d1.equals(d3));
+        System.out.println(d1.hashCode());
+        System.out.println(d2.hashCode());
+        System.out.println(d3.hashCode());
+        String s1="hello";
+        String s2="hello";
+        System.out.println(s1==s2);
+        int n=10;
+        System.out.println(n);
+    }
+}
+
+package com.rorryharris.datepack;
+
+public class Mydate {
+    private int dd,mm,yy;
+
+    @Override
+    public int hashCode() {
+        return (dd^mm^yy);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        Mydate my=(Mydate) o;
+        if(this.dd==dd && this.mm==mm && this.yy==yy)
+            return true;
+        else
+            return false;
+    }
+
+    public Mydate(int dd, int mm, int yy) {
+        this.dd = dd;
+        this.mm = mm;
+        this.yy = yy;
+
+    }
+
+    @Override
+    public String toString() {
+        return "Mydate{" +
+                "dd=" + dd +
+                ", mm=" + mm +
+                ", yy=" + yy +
+                '}';
+    }
+}
+
+Collection
+
+package com.torryharris.mainpack;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Set s=new HashSet();
+        s.add(10);
+        s.add(12.3);
+        s.add("java");
+        s.add(null);
+        System.out.println(s);
+
+        Set<String> s1=new HashSet<String>();
+        s1.add("java");
+        s1.add("clang");
+        s1.add("ruby");
+        s1.add("python");
+        System.out.println(s1);
+
+        Set<String> s2=new LinkedHashSet<String>();
+        s2.add("java");
+        s2.add("c lang");
+        s2.add("ruby");
+        s2.add("python");
+        System.out.println(s2);
+
+        Set<String> s3=new TreeSet<String>();
+        s3.add("java");
+        s3.add("c lang");
+        s3.add("ruby");
+        s3.add("python");
+        System.out.println(s3);
+
+    }
+}
+
+List
+
+package com.torryharris.mainpack;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ArrayList<String> al=new ArrayList<>();
+        al.add("asif");
+        al.add("syed");
+        al.add("asif");
+        al.add("efeff");
+        System.out.println(al);
+        al.add(1,"asal");
+        System.out.println(al);
+        al.remove(1);
+        System.out.println(al);
+        al.remove("asif");
+        System.out.println(al);
+
+        for(int i=0;i<al.size();i++){
+            System.out.print(al.get(i));
+        }
+        System.out.println();
+
+        Iterator<String> it=al.iterator();
+        while (it.hasNext())
+            System.out.println(it.next());
+
+        Scanner sc =new Scanner(System.in);
+        System.out.println("enter lenhth");
+        int n=sc.nextInt();
+        ArrayList<Integer> al1=new ArrayList<>();
+        for (int i=0;i<n;i++){
+            int ele=sc.nextInt();
+            al1.add(ele);
+        }
+        Iterator<Integer> it1=al1.iterator();
+        int sum=0;
+        while (it1.hasNext()){
+          int ele= it1.next();
+            System.out.println(ele);
+            sum=sum+ ele;
+        }
+        System.out.println(sum);
+    }
+
+
+
+}
+
+//Linked list
+package com.torryharris.mainpack;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        List<String> l1=new LinkedList<>();
+        l1.add("asif");
+        l1.add("syed");
+        l1.add("fiug");
+        System.out.println("is emplty"+l1.isEmpty());
+        System.out.println("contains asif?"+l1.contains("asif"));
+
+        ListIterator<String> it =l1.listIterator();
+        System.out.println("list in forward order");
+        while (it.hasNext()){
+            System.out.print(it.next()+" ");
+        }
+        System.out.println();
+        System.out.println("list in reverse order");
+        while (it.hasPrevious()){
+            System.out.print(it.previous()+" ");
+        }
+        System.out.println();
+        Collections.sort(l1);
+        System.out.println(l1);
+        Collections.reverse(l1);
+        System.out.println(l1);
+      }
+}
+
+//vector
+package com.torryharris.mainpack;
+
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Vector;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Vector<String> v=new Vector<>();
+        v.add("asif");
+        v.add("syed");
+        v.add("asal");
+        Enumeration<String> e=v.elements();
+        while (e.hasMoreElements())
+            System.out.println(e.nextElement());
+        Iterator<String> it = v.iterator();
+
+        while (it.hasNext())
+            System.out.println(it.next());
+    }
+}
+
+//stack
+package com.torryharris.mainpack;
+
+import java.util.Stack;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Stack<String> s=new Stack<>();
+        s.push("aaa");
+        s.push("bbb");
+        s.push("ccc");
+        System.out.println(s.pop());
+        System.out.println(s.peek());
+        System.out.println(s);
+     }
+}
+
+//Queue
+package com.torryharris.mainpack;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+	// write your code here
+        Queue<String> q=new LinkedList<>();
+        q.add("asif");
+
+        q.add("syed");
+        q.add("asal");
+
+        System.out.println(q.peek());
+        System.out.println(q.poll());
+        System.out.println(q.peek());
+
+    }
+}
+
+//Maps
+
+package com.torryharris.mainpack;
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Map<Integer,String> hm=new HashMap<>();
+        hm.put(1,"a");
+        hm.put(3,"b");
+        hm.put(2,"c");
+        System.out.println(hm);
+
+        Map<Integer,String> lhm=new LinkedHashMap<>();
+        lhm.put(1,"a");
+        lhm.put(3,"b");
+        lhm.put(2,"c");
+        System.out.println(lhm);
+
+        Map<Integer,String> tm=new TreeMap<>();
+        tm.put(1,"a");
+        tm.put(3,"b");
+        tm.put(2,"c");
+
+        System.out.println(tm);
+
+        Map<Integer,String> ht=new Hashtable<>();
+        ht.put(67,"a");
+        ht.put(39,"b");
+        ht.put(2,"c");
+        System.out.println(ht);
+
+        //itrating maps
+        for(Integer key:hm.keySet()){
+            System.out.println(key+"  "+hm.get(key));
+        }
+    }
+}
+
+package com.torryharris.mainpack;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
+import static java.util.Collections.max;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Map<customer,Integer> m=new TreeMap<>();
+        m.put(new customer(1,"asif"),1000);
+        m.put(new customer(2,"syed"),3000);
+        m.put(new customer(4,"asal"),5000);
+
+        System.out.println(max(m.values()));
+        for(customer c:m.keySet()){
+           if(max(m.values())==m.get(c)){
+               System.out.println(c+" "+m.get(c));
+           }
+        }
+    }
+}
+
+
+
+
