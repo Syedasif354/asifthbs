@@ -1,0 +1,202 @@
+////lombok demo
+
+<dependencies>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.20</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+    </dependencies>
+
+public class Main {
+    public static void main(String args[]){
+        customer c= new customer(10,4555,"asif");
+        System.out.println(c);
+    }
+}
+
+import lombok.*;
+
+@AllArgsConstructor
+@Setter
+@Getter
+@NoArgsConstructor
+@ToString
+
+
+
+public class customer {
+@Getter @Setter
+    private int id;
+        private int balance;
+        private String name;
+
+}
+
+////File writing from another file
+
+
+package com.torryharris.mainpack;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        File f1=new File("C:\\Users\\syed_asif\\Desktop\\asif.txt");
+        File f2=new File("C:\\Users\\syed_asif\\Desktop","asif1.txt");
+
+        try(FileReader fr=new FileReader(f1);
+            BufferedReader br=new BufferedReader(fr);
+            FileWriter fw=new FileWriter(f2);
+            BufferedWriter bw=new BufferedWriter(fw);){
+            String str;
+            // str= br.readLine();
+            //while (!str.equals("END"))
+            while((str=br.readLine())!=null)
+            {
+                System.out.println(str);
+                bw.write(str);
+                bw.newLine();
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+/////To append
+FileWriter fw=new FileWriter(f2,true);
+
+//reading file byte byte
+
+package com.torryharris.mainpack;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        File f1=new File("C:\\Users\\syed_asif\\Desktop\\asif.txt");
+        File f2=new File("C:\\Users\\syed_asif\\Desktop","asif1.txt");
+
+        try(FileInputStream fis=new FileInputStream(f1);
+            BufferedInputStream bis=new BufferedInputStream(fis);
+            FileOutputStream fos=new FileOutputStream(f2,true);
+            BufferedOutputStream bos=new BufferedOutputStream(fos);){
+//           int c;
+//           while ((c=bis.read())!=-1){
+//               bos.write(c);
+//               System.out.println((char) c);
+//           }
+            //or
+
+            byte[] buffer=new byte[fis.available()];
+            bis.read(buffer);
+            bos.write(buffer);
+            for(byte b:buffer){
+                System.out.print((char) b);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+///File read and write Object demo
+package com.torryharris.mainpack;
+
+import java.io.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        File f1=new File("C:\\Users\\syed_asif\\Desktop\\asif.txt");
+        File f2=new File("C:\\Users\\syed_asif\\Desktop","asif1.txt");
+
+        try(FileOutputStream op=new FileOutputStream(f1);
+        ObjectOutputStream oos=new ObjectOutputStream(op);
+        FileInputStream ip=new FileInputStream(f1);
+        ObjectInputStream ois=new ObjectInputStream(ip)){
+            Student s1=new Student(1,98,"asif");
+            oos.writeObject(s1);
+            Student s2=new Student(1,98,"asif");
+            oos.writeObject(s2);
+
+            while (ip.available()>0){
+                Student s= (Student) ois.readObject();
+                System.out.println(s);
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+}
+
+
+package com.torryharris.mainpack;
+
+import java.io.Serializable;
+
+public class Student implements Serializable {
+    private int id,marks;
+    private String name;
+
+    public Student(int id, int marks, String name) {
+        this.id = id;
+        this.marks = marks;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", marks=" + marks +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+
+
+////jdbc demo
+import java.sql.*;
+
+public class Main {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        // Load the driver
+        //Class.forName("com.mysql.jdbc.Driver");
+        //Establish connection with database using drivers
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","root");
+        // create a statement object
+        Statement st = con.createStatement();
+        // execute the query
+        ResultSet rs = st.executeQuery("select * from books");
+        // extract the rows form the rs -----> ResultSet object
+        while (rs.next())
+        {
+            System.out.println(rs.getInt(1)+"    "+rs.getString(2)+"   "+rs.getString(3));
+        }
+        // close the connection
+        con.close();
+
+    }
+}
