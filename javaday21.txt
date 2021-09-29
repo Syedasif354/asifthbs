@@ -1,0 +1,257 @@
+//using comparable
+package com.torryharris.mainpack;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ArrayList<Student> al=new ArrayList<>();
+        al.add(new Student(1,30,"asif"));
+        al.add(new Student(2,60,"syed"));
+        al.add(new Student(3,57,"asal"));
+        al.add(new Student(4,50,"iuuui"));
+        al.add(new Student(5,54,"ghf"));
+
+        for(Student s:al){
+            System.out.println(s);
+        }
+        Collections.sort(al);
+        for(Student s:al){
+            System.out.println(s);
+        }
+    }
+}
+
+package com.torryharris.mainpack;
+
+public class Student implements Comparable<Student>{
+    private int id,marks;
+    private String name;
+
+    public Student(int id, int marks, String name) {
+        this.id = id;
+        this.marks = marks;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", marks=" + marks +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(Student student) {
+        if(marks> student.marks)
+            return -1;
+        else if(marks== student.marks)
+            return 0;
+        else
+           return 1;
+    }
+}
+
+//comparetor
+package com.torryharris.mainpack;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+
+    public static void main(String[] args) {
+        ArrayList<person> al=new ArrayList<>();
+        al.add(new person(1,30,"asif"));
+        al.add(new person(2,60,"syed"));
+        al.add(new person(3,57,"asal"));
+        al.add(new person(4,50,"iuuui"));
+        al.add(new person(5,54,"ghf"));
+        System.out.println(al);
+        Collections.sort(al,new AgeComaretor());
+        System.out.println(al);
+        Collections.sort(al,new newComp());
+        System.out.println(al);
+    }
+}
+package com.torryharris.mainpack;
+
+public class person {
+    private int id,age;
+    private String name;
+
+    public person(int id, int age, String name) {
+        this.id = id;
+        this.age = age;
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    @Override
+    public String toString() {
+        return "person{" +
+                "id=" + id +
+                ", age=" + age +
+                ", name='" + name + '\'' +
+                '}';
+    }
+}
+
+package com.torryharris.mainpack;
+
+import java.util.Comparator;
+
+public class AgeComaretor implements Comparator<person> {
+
+    @Override
+    public int compare(person t, person t1) {
+        if(t.getAge()> t1.getAge())
+            return 1;
+        else if(t.getAge()== t1.getAge())
+            return 1;
+        else
+            return -1;
+    }
+}
+
+package com.torryharris.mainpack;
+
+import java.util.Comparator;
+
+public class newComp implements Comparator<person> {
+
+public int compare(person t, person t1) {
+        if(t.getAge()> t1.getAge())
+        return -1;
+        else if(t.getAge()== t1.getAge())
+        return 0;
+        else
+        return 1;
+        }
+        }
+
+//priority queue
+package com.torryharris.mainpack;
+
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Queue<item> pq=new PriorityQueue<>();
+        pq.add(new item(1,"java"));
+        pq.add(new item(4,"c"));
+        pq.add(new item(5,"c++"));
+        pq.add(new item(7,".net"));
+
+        System.out.println(pq);
+        for (item i:pq)
+            System.out.println(i);
+        System.out.println(pq.poll()+"888888888888");
+        System.out.println(pq);
+        for (item i:pq)
+            System.out.println(i);
+        System.out.println(pq.poll());
+    }
+}
+package com.torryharris.mainpack;
+
+public class item implements Comparable<item>{
+    private int id;
+    private String name;
+
+    public item(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "item{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public int compareTo(item i) {
+        if(id> i.id)
+            return 1;
+        else if(id== i.id)
+            return 0;
+        else
+            return -1;
+    }
+}
+
+//generics
+package com.torryharris.mainpack;
+
+import java.util.ArrayList;
+
+public class Main {
+
+    public static void main(String[] args) {
+     test<String,String> t=new test<>("hello","world");
+
+     System.out.println(t);
+
+     Integer[] ar={1,2,3,4};
+     test1.printArray(ar);
+        ArrayList<Double> al=new ArrayList<>();
+        al.add(1.0);
+        al.add(1.0);al.add(1.0);al.add(1.0);
+
+        test2.suboflist(al);
+    }
+}
+
+package com.torryharris.mainpack;
+
+public class test <T,U>{
+    private T ob1;
+    private U ob2;
+
+    public test(T ob1, U ob2) {
+        this.ob1 = ob1;
+        this.ob2 = ob2;
+    }
+
+    @Override
+    public String toString() {
+        return "test{" +
+                "ob1=" + ob1 +
+                ", ob2=" + ob2 +
+                '}';
+    }
+}
+package com.torryharris.mainpack;
+
+public class test1 {
+    public static <T> void printArray(T[] arr){
+        for(T i:arr)
+            System.out.println(i);
+    }
+}
+package com.torryharris.mainpack;
+
+import java.util.List;
+
+public class test2 {
+    public static Number suboflist(List<? extends Number> nlist){
+        double s=0.0;
+        for(Number n:nlist){
+            System.out.println(n);
+            s+= n.doubleValue();
+        }
+    return s;
+    }
+}
