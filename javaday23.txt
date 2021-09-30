@@ -1,0 +1,211 @@
+///CURD OP USING JDBC
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import static java.lang.System.exit;
+
+public class Main {
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        BookOpImp boi=new BookOpImp();
+      while(true) {
+          System.out.println("1. add a book");
+          System.out.println("2. List all the books");
+          System.out.println("3. get the book");
+          System.out.println("4. update a book");
+          System.out.println("5. exit");
+
+          System.out.println("Enter your choice");
+          int ch = sc.nextInt();
+          switch (ch) {
+
+              case 1: {
+                  System.out.println("enter the book details");
+                  int bid = sc.nextInt();
+                  sc.nextLine();
+                  String bname = sc.nextLine();
+                  String bcat = sc.nextLine();
+                  Book n = new Book(bid,  bname,bcat);
+                  System.out.println(boi.addBook(n));
+                  break;
+              }
+              case 2: {
+                  ArrayList<Book> al=boi.getAllBook();
+                  for(Book bb:al){
+                      System.out.println(bb);
+                  }
+                  break;
+              }
+              case 3:
+              {
+                  System.out.println("Enter the  book id to be searched");
+                  int bookId = sc.nextInt();
+                  Book book = boi.getBook(bookId);
+
+                  if (book != null)
+                      System.out.println(book);
+                  else
+                      System.out.println("Book not found in the Store");
+
+                  break;
+              }
+              case 4:
+              {
+                  System.out.println("Enter the  book id ");
+                  int bookId = sc.nextInt();
+                  System.out.println("Enter the  updated price of the book  ");
+                  sc.nextLine();
+                  String ubn = sc.nextLine();
+                  System.out.println(boi.setPrice(bookId,ubn));
+
+                  break;}
+              case 5: {
+                  exit(0);
+              }
+              default:
+                  System.out.println("inalid choice");
+          }
+      }
+    }
+}
+public class Book {
+    private int bookid;
+    private String bookname,bookcat;
+
+    public Book(int bookid,  String bookname,String price) {
+        this.bookid = bookid;
+        this.bookcat = price;
+        this.bookname = bookname;
+    }
+
+    public int getBookid() {
+        return bookid;
+    }
+
+    public String getBookname() {
+        return bookname;
+    }
+
+    public String getBookcat() {
+        return bookcat;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookid=" + bookid +
+                ", bookcat=" + bookcat +
+                ", bookname='" + bookname + '\'' +
+                '}';
+    }
+}
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBmanager {
+    public static Connection getConnection(){
+        Connection con =null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/library","root","root");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+return con;
+    }
+}
+import java.util.ArrayList;
+
+public interface BookOperation {
+    String addBook(Book book);
+    ArrayList<Book> getAllBook();
+    Book getBook(int bookId);
+    String setPrice(int bookId,String name);
+}
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class BookOpImp implements BookOperation{
+    ArrayList<Book> al=new ArrayList<>();
+    public static Connection con=null;
+    @Override
+    public String addBook(Book book) {
+        PreparedStatement ps = null;
+        con = DBmanager.getConnection();
+        String str = "insert into books values (?,?,?)";
+
+        try {
+            ps = con.prepareStatement(str);
+            ps.setInt(1,book.getBookid());
+            ps.setString(2,book.getBookname());
+            ps.setString(3,book.getBookcat());
+            ps.executeUpdate();
+            return "One row inserted: Book inserted successfully...";
+
+
+
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            return ("insertion failed due to exception....");
+        }
+    }
+
+    @Override
+    public ArrayList<Book> getAllBook() {
+        ArrayList<Book>  blist = new ArrayList<Book>();
+        con = DBmanager.getConnection();
+
+        try {
+            Statement st  = con.createStatement();
+            ResultSet rs =  st.executeQuery("select * from books");
+            while (rs.next())
+            {
+                Book book = new Book(rs.getInt(1),rs.getString(2),rs.getString(3));
+                blist.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return blist;
+    }
+
+    @Override
+    public Book getBook(int bookId) {
+        con = DBmanager.getConnection();
+        Book book=null;
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from books where book_id="+bookId);
+            while(rs.next())
+            {
+                book = new Book(rs.getInt(1),rs.getString(2),rs.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return book;
+    }
+
+    @Override
+    public String setPrice(int bookId, String name) {
+        PreparedStatement ps = null;
+        String str = "update books set book_name = ? where book_id=?";
+
+        con = DBmanager.getConnection();
+        try {
+            ps = con.prepareStatement(str);
+            ps.setString(1,name);
+            ps.setInt(2,bookId);
+
+            ps.executeUpdate();
+
+            return "One row updated..Book price updated successfully..";
+
+        } catch (SQLException e) {
+            //e.printStackTrace();
+            return ("Updation failed due to exception....");
+        }
+    }
+}
